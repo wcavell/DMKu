@@ -1,0 +1,101 @@
+﻿<Controls:MetroWindow x:Class="DMKu.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls" 
+        xmlns:pan="clr-namespace:PanoramaControl;assembly=PanoramaControl"
+        xmlns:conver="clr-namespace:DMKu.Converters"
+        Title="MainWindow" TitleCaps="False"  GlowBrush="{DynamicResource AccentColorBrush}"
+  Height="500"  Width="720">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+            <Ellipse x:Key="DarkThemeMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     StrokeThickness="1"
+                     Stroke="{DynamicResource BlackBrush}"
+                     Fill="{DynamicResource WhiteBrush}" />
+            <Ellipse x:Key="LightThemeMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     StrokeThickness="1"
+                     Stroke="{DynamicResource BlackBrush}"
+                     Fill="{DynamicResource BlackBrush}" />
+            <Ellipse x:Key="AccentMenuIcon"
+                     x:Shared="False"
+                     Width="16"
+                     Height="16"
+                     Fill="{Binding ColorBrush, Mode=OneWay}" />
+            <Style x:Key="AccentColorMenuItemStyle"
+                   TargetType="{x:Type MenuItem}"
+                   BasedOn="{StaticResource MetroMenuItem}">
+                <Setter Property="Command"
+                        Value="{Binding ChangeAccentCommand}" />
+                <Setter Property="Icon" Value="{StaticResource AccentMenuIcon}"  />
+                <Setter Property="Header" Value="{Binding Name, Mode=OneWay}" />
+            </Style>
+            <Style x:Key="WXMenuItemStyle" TargetType="{x:Type MenuItem}">
+
+            </Style>
+            <conver:SettingConverter x:Key="SettingConverter"/>
+            <DataTemplate DataType="" >
+
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Controls:MetroWindow.WindowCommands >
+        <!--类似工具栏-->
+        <Controls:WindowCommands >
+            <TextBox Width="120" 
+                     Controls:TextboxHelper.Watermark="Id号/搜索内容"
+                     Controls:TextboxHelper.ButtonCommand="{Binding SeachCommand}"
+                     Style="{DynamicResource SearchMetroTextBox}"
+                     Text="{Binding Path=SeachText,UpdateSourceTrigger=PropertyChanged}" Height="20"/>
+            <Button  Command="{Binding RefContentCommand}">
+                <Rectangle Width="15" Height="18">
+                    <Rectangle.Fill>
+                        <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_refresh}"/>
+                    </Rectangle.Fill>
+                    <Rectangle.ToolTip>
+                        <TextBlock Text="刷新"/>
+                    </Rectangle.ToolTip>
+                </Rectangle>
+            </Button>
+            <Menu  Background="#00000000">
+                <MenuItem Header="设置">
+                    <MenuItem Header="主题">
+                        <MenuItem Header="浅色" Command="{Binding ThemeLightCommand}" Icon="{StaticResource DarkThemeMenuIcon}" />
+                        <MenuItem Header="深色" Command="{Binding ThemeDarkCommand}" Icon="{StaticResource LightThemeMenuIcon}" />
+                    </MenuItem>
+                    <MenuItem Header="色调" ItemsSource="{Binding AccentColors, Mode=OneWay}"
+                          ItemContainerStyle="{StaticResource AccentColorMenuItemStyle}" />
+                    <MenuItem Header="内容方向" >
+                        <RadioButton Content="Acfun" FontSize="16" IsChecked="{Binding Path=SelectVFrom, Mode=TwoWay, Converter={StaticResource SettingConverter}, ConverterParameter=A}" GroupName="ABC"/>
+                        <RadioButton Content="bilibili" FontSize="16" IsChecked="{Binding Path=SelectVFrom, Mode=TwoWay, Converter={StaticResource SettingConverter}, ConverterParameter=B}" GroupName="ABC"/>
+                        <RadioButton Content="tucao" FontSize="16" IsChecked="{Binding Path=SelectVFrom, Mode=TwoWay, Converter={StaticResource SettingConverter}, ConverterParameter=C}" GroupName="ABC"/>
+                    </MenuItem>
+                    <MenuItem Header="详细设置" Command="{Binding DetailedSettingCommand}"/>
+                </MenuItem>
+            </Menu>
+            <Menu Background="#00000000">
+                <MenuItem Header="帮助" Command="{Binding AboutCommand}"/>
+            </Menu>
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.WindowCommands>
+    <Controls:MetroContentControl>
+        <Grid>
+            <Controls:MetroAnimatedSingleRowTabControl>
+                <TabItem Header="主页">
+                    <pan:Panorama x:Name="wxpan" UseSnapBackScrolling="{Binding}"
+                                  ItemsSource="{Binding}" GroupHeight="400" VerticalContentAlignment="Top" 
+                                  Orientation="Vertical" Background="Transparent" Margin="0,-22,0,22"
+                                  />
+
+                </TabItem>
+            </Controls:MetroAnimatedSingleRowTabControl>
+        </Grid>
+    </Controls:MetroContentControl>
+</Controls:MetroWindow>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<doc>
+  <Version info="版本">0.1</Version>
+  <BackgoundImage info="背景图片"></BackgoundImage>
+  <VideoInfoFrom info="视频信息来源">B</VideoInfoFrom>
+  <VideoDefinition info="视频清晰度">Default</VideoDefinition>
+  <CacheSaveTime info="缓存时间">Permanent</CacheSaveTime>
+  <CachePath info="缓存地址">Default</CachePath>
+  <VideoCache info="是否启用视频缓存到硬盘">0</VideoCache>
+  <AutoUpdate info="自动更新程序">0</AutoUpdate>
+  <Theme info="主题">Dark</Theme>
+  <AccentColor info="色调">Blue</AccentColor>
+</doc>
